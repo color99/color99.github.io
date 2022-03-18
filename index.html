@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	
+	<link rel="stylesheet" href="AItalk.css">	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jsrsasign/8.0.4/jsrsasign-all-min.js"></script>
+
+    <title>smart Frog  environmental  robot</title>
+  </head>
+
+<div style="position: relative;height:100%; top: 0px; background: linear-gradient(to bottom,#ebb2b1 0%,#82addb 30%,#0575e6 30%,#00f260 100%);" >
+    <h1 >smartFrog environmental robot</h1> 
+<!-- lily pads embeded  -->
+<img src="lily-2pads.svg" width="150" height="150" style = "position: absolute;top:37%; left: 20%; z-index: 1">
+<img src="lily-pads.svg" width="150" height="150" style = "position: absolute; top:32%; right: 20%; z-index: 1">
+<img src="lily-pad-flower.svg" width="120" height="120" style = "position: absolute;top:29%; left: 3%; z-index: 1">
+<img src="lily-pad-weeds.svg" width="120" height="120" style = "position: absolute;top:27%; right: 5%; z-index: 1">
+<img src="lily-1pad.svg" width="380" height="380" style = "display:block; position:relative;top:265px;  margin-left: auto; margin-right: auto ; z-index: 1">
+<div id = "frogDIV" width = "30%"  >
+<svg width="360" height="320" preserveAspectRatio="none" style = "display:block; position:relative;z-index: 100; top:-220px; margin-left: auto; margin-right: auto  " xmlns="http://www.w3.org/2000/svg" >
+     <g transform="scale(0.7)
+	               translate(23 0)">
+ <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+ <g class="layer" xmlns="http://www.w3.org/2000/svg">
+  <title>Layer 1</title>
+  <ellipse cx="364.08713" cy="366.26923" fill="#007f3f" id="svg_5" rx="41.29911" ry="88.70418" stroke="#000000" transform="matrix(0.807959 0.550067 -0.536997 0.828991 264.581 -138.516)"/>
+  <ellipse cx="116.72481" cy="341.90808" fill="#007f3f" id="svg_6" rx="45.20838" ry="84.24443" stroke="#000000" transform="matrix(1 0 0 1 0 0) matrix(0.806345 -0.650177 0.591446 0.886416 -182.51 135.067)"/>
+  <circle cx="236" cy="321.5" fill="#007f3f" id="svg_8" r="126.20596" stroke="#007f3f" transform="matrix(1 0 0 1 0 0)"/>
+  <ellipse cx="237" cy="298.5" fill="#00bf5f" id="svg_12" rx="80" ry="103.5" stroke="#00bf5f"/>
+  <ellipse cx="236" cy="166.5" fill="#007f3f" id="svg_13" rx="113" ry="92.5" stroke="#007f7f" stroke-width="4"/>
+  <circle cx="176" cy="94" fill="#007f3f" id="svg_14" r="46.31129" stroke="#007f3f"/>
+  <circle cx="298" cy="96" fill="#007f3f" id="svg_15" r="46" stroke="#007f3f"/>
+  <circle cx="178.5" cy="97" fill="#ffffff" id="svg_16" r="32" stroke="#007f3f"/>
+  <circle cx="294" cy="100" fill="#ffffff" id="svg_17" r="34.20526" stroke="#007f3f"/>
+  <circle cx="178.5" cy="101.5" fill="#000000" id="svg_18" r="18.33287" stroke="#000000"/>
+  <circle cx="293.5" cy="105.5" fill="#000000" id="svg_19" r="19.36068" stroke="#000000"/>
+  <path d="m170.93236,442.41688c-1.19014,-51.60446 -96.16325,-51.60446 -94.97311,1.45864" fill="#007f3f" id="footLeft" stroke="#007f3f" transform="matrix(1 0 0 1 0 0)"/>
+  <path d="m394.49212,443.53215c-1.19014,-51.60446 -96.16325,-51.60446 -94.97311,1.45864" fill="#007f3f" id="footRight" stroke="#007f3f"/>
+ </g>
+ <g class="layer">
+  <title>Layer 2</title>
+  <path d="m282,173 c-1.19014,34.35331 -96.16325,34.35331 -94.97311,0.97102 c 1.19014, 14.35331 96.16325, 14.35331 94.97311, -0.97102" fill="red" id="lipsPath" stroke="#007f3f"/>
+ </g> </g>
+</svg>
+</div>
+
+<nav class="btn-pluss-wrapper" style = "position:absolute; width:50%;left:-5%; top:5%;  z-index: 10"  >
+ <h2 class="tooltip">Look!</h2>
+ <div href="#" class="btn-pluss">
+  <ul>
+    <li><button onclick= "speak(howtouse)">How to use</button></li>
+    <li><button onclick="speak(introduction)">Introduction</button></li>
+	<li><button onclick="speak(hazardousWaste)">Hazardous waste</button></li>
+    <li><button onclick="speak(waterPollution)">Water pollution</button></li>
+  </ul>
+ </div>
+</nav>
+
+   <div class="btn-group" style = "position:absolute; right:5%; top:3%; z-index: 200;" >
+ <ul>
+  <li> <button onclick="clearit()"  >Clear  </button></li>
+  <li><button id="buttonListening">Start listening </button></li>
+  <li><button onclick="sendText()"> Enter </button></li>
+   </ul>
+  	<textarea rows="4" cols="27" id="inputText" name="feedback" onkeypress="enterPressed(event)"  maxlength="1000" >
+	Input here instead of speaking.
+	</textarea>
+  </div>
+</div> //end of main page
+
+<! wasteDIV for waste message background is transparent  --->
+<div id="wasteDIV" style="display:none; position:relative; z-index: 10; border: 2px solid lightblue; border-radius: 12px; background-color: rgba(255, 255, 255, 0.9); margin: 0 auto; width: 45%;text-align: center;" >
+<p>If the new tab does not popup, click the button to open a new tab to see more information on waste disposal facilities.</p>
+<button onclick="openInNewTab()" style="display: inline; color:blue;font-size:16px;" >open new tab</button>
+</div>
+
+// iframe div for tap water.
+<div width="100%" style="position:relative;z-index: 300;" >
+<iframe id ="iframe1" src=" " style="border:none;  z-index: 300;" height="2000" width="100%" title="Query Result"></iframe>
+</div>
+
+
+<script>
+
+var iframe1 = document.querySelector('#iframe1');
+const wasteDIV = document.getElementById('wasteDIV');
+var zipcode ="";
+var isValidZip = false;
+var wasteLink = "https://www.google.com/maps/search/waste+recycle";
+function openInNewTab() {
+ setTimeout(function(){
+  window.open(wasteLink, '_blank').focus(); }, 2000);
+}
+
+//====== Generate token: the token is required for access Google API. The token generating aligorithm is coppied from early Google lesson.
+	let private_key_id = "a25b2b8b62a756b18480a6422ac0a0807b3dba83";
+	let private_key ="-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCNLWQ3eKTPjke+\n9V5G+hQLOAxW8/1+y2IVIvYzbrnLY/uFh8jY1g+EPItTu89aC1uCcXfigLJe47GJ\nnUsYIu8I2703SSdj2iumt9yOPaRohJ3owxQCD5VaGaM8wVGM+pPS/p/BPDLWYU+y\nvICDH92ce6dhiFbfbL9T4fw95RbVY58Fs0E90Jufb75PyywKLFUqc98tIURhkGL3\nBr969TBGSrz+H8crwiZy39J7WSQ7Tmhnyj8/MtGHvM4xMy8lxTGK3QaBmFs3wmqY\nKcnMOsElBfMJDeBOYa9iy3Dwt8ZdX2O2/WylSEr9gqLWU/X2rEmqj647nKcu4Zq7\n3wfw9/69AgMBAAECggEAEoO1LKQtAw5PAO9XX5oM1mLRlXa2lDISiSCWZqza/147\nnmmuEKfUDZzODdtnyFCMffkpBoKnwdN9FUXUUxRDwmbk8/LrUEhMqLbcnSfe35ki\nx2OMBHAsP0507rMQoZs8FzPu2g3twdkttUxM00Vy0AKUczFI6VCu786HgMuCONY/\np1t3iTlHj0V8WckMlcqbQ/dMeYlZpKZstB2q6gKMaRCuwo1hso4UfxHzgfCMZWR3\nKY2wiVmBePQXpBqCO6/d1fnHYdN2OGRNaUoFG8YiaZvLweP6gXAVXYItvhjUvddq\nc+Bxuqnxgh3MGC1T1kNSOCr+bQUOddGNl5XZaYMBEQKBgQC/m2YxgMU+X2aLsli8\n8xBajv7+AjzCZWBazdfYWz7g3dLgrO8fx3vci/m+H7uPXSDij965KM66KkFzWfN8\neeNI5uD2B4A6jx0aT7URtnetJziAyyIL/MtYvaKjMRIChcyWTdCHS0VL4fsDBtLO\nfZiaelYP+i/sMrU8DNkXI4UqkQKBgQC8n1pi4wTkcCkjn/HNF0wUvfJHX9d+WAPC\niSgFfhL5w3m0gG0DswEtU1tyjPvKeAg6xpEdQXtpSMdm9S3NOC9GtzkEdncNkCdi\nxvUgwgFLcexLE19z64YvhNzup02TF7/UWYD2cgGfCifZiS7XWNB5PU87eJxOXFA/\n0lffntBvbQKBgCNYDgTJpRi5TlgsgNPx3i1mPUErtnuBacG2QL+HLVUbdf+9xqpN\nCNsI8vuQLO/oFN3V/haXoXKTwtj9Wb23WiajeBHKFmw24/5rf5IR34eQOYsAbXpa\nmkP3Tx3dOl4+whtjpTifuNujhsLrKk2uu0ybjm6KDvb575ZxJEZxZeoRAoGANb7q\nUFcDo9vZvQ7sJVZIFXjyOigzDQsjNyFByB7eZVCvsyEM7wrogPPJkOBfNpfxMF44\nJy/rbFqShuHBxUIHJo06r+zZi4HR1zF903G0UL0LaXEBt9Qajhu7oD0Hu6v+uxEt\n0As4LwsDw9Z1BGOIM6OmmfmKAEIJk8XpyAxGtBkCgYAlIv6t8m39R9oeybg19tk6\n0DZXeHq0c6xCtbCsIdFQQflBLFA3Im7MBgF3eh8AiWLrl1bpEH9MirURAW+Qfj+m\nyGHkJkmT/kiSRJyEsWQKW9ZyzS6ywYfxNdfEegwkgizvtKNcfseHwXjKRnfsS41T\n3hrmUWUUT9va2lw9U/glWA==\n-----END PRIVATE KEY-----\n";
+	let client_email = "megan1@meganmega-trpo.iam.gserviceaccount.com";
+	const header = {
+        alg: 'RS256',
+        typ: 'JWT',
+        kid: private_key_id  
+      }
+
+      const myInfo = {
+        iss: client_email,
+        sub: client_email,
+        iat: KJUR.jws.IntDate.get('now'),
+        exp: KJUR.jws.IntDate.get('now + 1hour'),
+        aud: 'https://dialogflow.googleapis.com/google.cloud.dialogflow.v2.Sessions'
+      }
+
+      const stringHeader = JSON.stringify(header);
+      const stringmyInfo = JSON.stringify(myInfo);
+      var token = KJUR.jws.JWS.sign('RS256', stringHeader, stringmyInfo, private_key);
+//	console.log("token: " + token);
+//====== End of the token generating
+
+// The dialogflow data access with access token. https://codepen.io/bluebordeaux/pen/xxbjYyZ
+var base_url = 'https://dialogflow.googleapis.com/v2/projects/meganmega-trpo/agent/sessions'; // need to replace the project_id for different project
+var languageCode = 'en-US';
+
+ async function queryDialog(input_data){
+ console.log("input_data2:" + input_data )
+  const response = await fetch(
+  base_url + "/1234567:detectIntent", {
+
+		    method: 'POST',
+
+			headers: {
+				"Accept": "application/json, text/plain, */*",
+                "Content-Type": "application/json",
+
+                "Authorization": "Bearer " + token,
+
+            },
+
+            body: JSON.stringify(input_data)
+
+        });
+
+	 const data = await response.json();
+	// console.log(data);
+	 console.log("result-fulfillmentText: ", data.queryResult.fulfillmentText);
+	 console.log("result-fulfillmentMessages: ", data.queryResult.fulfillmentMessages);
+	 console.log("result-fulfillmentMessages-0: ", data.queryResult.fulfillmentMessages[0]);
+	 //console.log("result-fulfillmentMessages-0text: ", data.queryResult.fulfillmentMessages[0].text.text[0]);
+
+	 if(data.queryResult.fulfillmentMessages[1]) {
+	  console.log("result-parameters: ", data.queryResult.parameters);
+	 console.log("result-fulfillmentMessages-1: ", data.queryResult.fulfillmentMessages[1]);
+	 console.log("result-fulfillmentMessages-1payload: ", data.queryResult.fulfillmentMessages[1].payload);
+	 console.log("result-fulfillmentMessages-1payload: ", data.queryResult.fulfillmentMessages[1].payload.cases);
+
+	 switch( data.queryResult.fulfillmentMessages[1].payload.cases){
+	 case "shake":
+
+	 frogSVG.classList.add('shake'); // triggering animation
+	  console.log("case-shake: result-fulfillmentMessages-1payload: ", data.queryResult.fulfillmentMessages[1].payload.cases);
+	frogSVG.onanimationend = (event) => { // remove animation for the next triggering
+    console.log('Animation shake ended');
+	event.stopPropagation();
+    frogSVG.classList.remove('shake');
+	 };
+	 break;
+
+	 case "tapWater":
+	 wasteDIV.style.display = "none";
+	 zipcode =  data.queryResult.parameters['zip-code'];
+	 //USA zip code validation
+	 isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcode);
+	 console.log("zipcode: ",isValidZip)
+	 console.log("tapWater case: ", zipcode );
+	 if(isValidZip == false) {
+	 speak("zip code is invalid, please tell me a valid one or input it directly.");
+
+	 iframe1.src = "https://www.ewg.org/tapwater/search-results.php?zip5=";
+	 iframe1.classList.remove("gogogo");
+	 void iframe1.offsetWidth; //trigger a DOM reflow
+	 iframe1.classList.add("gogogo");  //iframe slide up pause and slide down.
+	 return; // get out of the function.?
+	 }
+	
+	 document.getElementById('iframe1').src = "https://www.ewg.org/tapwater/search-results.php?zip5=" + zipcode;
+	 iframe1.classList.remove("gogogo");
+	 void iframe1.offsetWidth; //trigger a DOM reflow
+	 iframe1.classList.add("gogogo");  //iframe slide up pause and slide down.
+	 break;
+
+	 case "waste":
+	 console.log("zipcode ", data.queryResult.parameters['number'] );
+	 zipcode =  data.queryResult.parameters['number'];
+	 //USA zip code validation
+	 isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcode);
+	// console.log("zipcode-validation: ",isValidZip)
+	// console.log("waste case: ", zipcode );
+	 if(isValidZip == false) {
+	 speak("zip code is invalid, please tell a valid one or input it directly.");
+
+	 wasteLink = "https://www.google.com/maps/search/waste+recycle";
+	 wasteDIV.style.display = "block";
+	 console.log("wasteDIV: ",wasteDIV);
+	 wasteDIV.classList.remove("gogogo");
+	 void wasteDIV.offsetWidth; //triggering a DOM reflow 
+	 wasteDIV.classList.add("gogogo");
+	 openInNewTab();
+	 return; // get out of the function.
+	 }
+     wasteLink = "https://www.google.com/maps/search/waste+recycle+" + zipcode;
+	 wasteDIV.style.display = "block";
+	 console.log("wasteDIV: ",wasteDIV);
+	 wasteDIV.classList.remove("gogogo");
+	 void wasteDIV.offsetWidth; //triggering a DOM reflow
+	 wasteDIV.classList.add("gogogo");  //wasteDIV slide up pause and slide down.
+	 openInNewTab();
+
+	 break;
+	 }
+	}
+
+	speak(data.queryResult.fulfillmentText); //speak out text from dialogflow
+};
+//
+
+var frogDIV = document.querySelector("#frogDIV");
+var frogSVG =  frogDIV.querySelector("svg");
+var lipsPath = frogSVG.querySelector('#lipsPath')
+console.log("lipsPath:" + lipsPath);
+//frogSVG.classList.remove('bounce-in-top');
+//void frogSVG.offsetWidth; //trigger a DOM reflow
+frogSVG.classList.add('bounce-in-top');
+frogSVG.onanimationend = (event) => { // remove animation for next time trigger
+    console.log('Animation bounce ended');
+	event.stopPropagation();
+    frogSVG.classList.remove('bounce-in-top');
+	 };
+	 
+lipsPath.classList.add("movingLips"); // change iteration number(0 or infinite) to start or stop animation
+	//
+var inputText = document.querySelector("#inputText");
+const buttonListening = document.getElementById("buttonListening");
+var clickStop = true;
+var listening= false;
+var speaking= false;
+
+// Using web speech API.
+// refer to https://www.section.io/engineering-education/speech-recognition-in-javascript/
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition; //webkitSpeechRecognition is for old browser
+const recognition = new SpeechRecognition();
+
+recognition.onend = function() { //at the end of regnition, start listening.
+		console.log('Speech recognition service end');
+		if (speaking == false && clickStop == false) { 
+			startListening();
+			}
+		}
+
+const onResult = event => {  
+  //      inputText.innerHTML = "";
+        for (const res of event.results) {
+             const text = document.createTextNode(res[0].transcript);
+			 recogitionText =res[0].transcript;
+             if (res.isFinal) {
+                inputText.innerHTML = recogitionText; //display result on input textarea. 
+              }
+            }
+		sendRecogitionText(recogitionText); // send to dialogflow
+          };
+
+recognition.continuous = false;
+recognition.addEventListener("result", onResult);
+// end of speech  recognition.
+
+//manully stop or start listening by click this button
+buttonListening.addEventListener("click", event => {
+      console.log("before click, listening:" + listening);
+		if(speaking){
+		    inputText.innerHTML = "Please click me after speaking or click clear button to stop speaking.";
+			return;
+		}
+            listening ? stopListening() : startListening();  //change stop or listening status.
+			console.log("before click, clickStop:" + clickStop);
+			clickStop = !listening; // listening value has been updated after stopListening() or startListening() called.
+          });
+
+if (typeof SpeechRecognition == "undefined") { //check if the browser support speech recognition
+    buttonListening.remove();
+    inputText.innerHTML = "The browser does not support speech recognition.Please enter text.";
+	alert("The browser does not support speech recognition.");
+       }
+ 
+var recogitionText ="";
+	const sendRecogitionText = (order) => {
+	console.log("function get order:" + order);
+
+	let query =order;
+	let query_data = {"queryInput": {"text": {"text":query,"languageCode":"en-US"}}};
+	console.log("query:" + query_data );
+	queryDialog(query_data);	//go to Dialogflow:
+	}
+
+var synth = window.speechSynthesis; //web speech API function speechSynthesis()
+var voices = [];
+
+//the following code comes from: https://codepen.io/zeeshan-satti/pen/gdobgY 
+// https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/getVoices
+//https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/voiceschanged_event
+function populateVoiceList() {   
+  voices = synth.getVoices(); //get voices list of the brower supplies.
+ // console.log('voices2:', voices);
+}
+
+populateVoiceList();
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoiceList; } //get voices list again if voicechanged event exist(in this case, the first getVoices() return an empty list.)
+ //// for Safari, it has no voicechanged event, voices list is given directly. For other browsers, must get voiles list after voicecheaged event.
+
+function speak(message) {
+  const msg = new SpeechSynthesisUtterance(message)
+  msg.lang = 'en-US';
+ for (var i = 0, len = voices.length; i < len; i++) {
+ //console.log("speak loop start");
+      if (voices[i].lang == 'en-US') {
+	  console.log("voice: ",voices[i]);
+	  console.log("voicei: ",i);
+      msg.voice = voices[i];
+	 break;
+}}
+  msg.pitch = 1;
+  speaking = true;
+  window.speechSynthesis.speak(msg);
+
+  msg.onstart = function(event) {
+  stopListening();  //when speaking, stop listening.
+  setTimeout(function(){
+  lipsPath.style.animationIterationCount = "infinite" }, 200);
+}
+
+  msg.onend = function(event) {
+  lipsPath.style.animationIterationCount = "0";  // stop lips' moving.
+  speaking = false;
+  console.log('msg has finished being spoken after ' + event.elapsedTime + ' milliseconds.');
+  if (listening == false && clickStop == false) {
+	startListening();
+	}
+  }
+}
+// end of the function speak(message)
+
+const stopListening = () => {
+		listening = false;
+        recognition.stop();
+        buttonListening.textContent = "Start listening";
+         };
+
+function startListening() {
+  listening= true;
+  recognition.start();
+  buttonListening.textContent = "Stop listening";
+  }
+  
+function sendText() {
+const inputx = inputText.value; // Get text from input aera
+sendRecogitionText(inputx);  //send to dialogflow 
+};
+
+function clearit() {
+console.log('clear start.');
+inputText.innerHTML = " ";  // clear input textarea.
+wasteDIV.style.display = "none"; //Hide waste message 
+iframe1.src=""; //clear iframe
+synth.cancel(); //  stops being spoken immediately
+};
+
+function enterPressed(event) { //key pressed event
+	if (event.keyCode == 13) { //enter key
+         console.log("Enter key is pressed");
+		 sendText(); // send text to dialogflow
+      } 
+   }
+   
+//The followings are messages to be spoken by click menu items.
+const howtouse = " To start, click hazardous waste or water pollution to learn more about these topics. When clicking the start listening option, you can ask me about where to dispose harmful trash or what quality your local tap water is. You can also type your question in the chat box and click send out if your microphone is experiencing difficulties. And if you're a new user, don't forget to click introduction. Have fun! ";
+const introduction = "Hello, my name is smart frog environmental robot! Recently, I have seen more and more pollution in my river home. My goal is to teach as many people as possible about their local environment. Please help me fight against environmental change, or as I like to call it, the global cause against frog home destruction! ";
+const hazardousWaste = "Hazardous waste: Did you know that there are many household items that can be dangerous if not taken care of properly? This is because things with chemicals can leak into the soil, or get into the air and harm our health. Common household items with these properties include batteries, paint, glue, electronic devices, and pesticides. To learn more about where you can safely dispose hazardous waste, ask me about it by clicking the start listening button. ";
+const waterPollution = "Water pollution: With more and more global warming, oil spills, and waste dumping, water quality can get dangerous for frogs and humans. Even if the water looks clean, often times it is contaminated with lead, or antimony, things that come from polluting the environment. To learn more about tap water quality in your area, ask me about it by clicking the start listening button. ";
+
+  </script>
+  </body>
+</html>
